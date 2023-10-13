@@ -45,7 +45,7 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v2
 
-      - name: SSH 설정
+      - name: webfactory/ssh-agent
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
