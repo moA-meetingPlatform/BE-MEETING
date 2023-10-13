@@ -8,7 +8,7 @@ on:
 env:
   IMAGE_TAG: dev-1
   DOCKERHUB_REPO: awdfaf/be-meeting
-  GITHUB_SSH_PRIVATE_KEY: ${{ secrets.GITHUB_SSH_PRIVATE_KEY }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
@@ -27,7 +27,7 @@ jobs:
 
     - name: Update helm chart and push to repository
       env:
-        PRIVATE_KEY: ${{ secrets.GITHUB_SSH_PRIVATE_KEY }}
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
