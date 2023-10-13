@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  IMAGE_TAG: dev-2
+  IMAGE_TAG: dev-3
 
 jobs:
 
@@ -45,11 +45,6 @@ jobs:
       - name: 코드 체크아웃
         uses: actions/checkout@v2
 
-      - name: webfactory/ssh-agent
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: values.yaml 수정 및 푸쉬
         run: |
           git config user.email "awdfaf@kakao.com"
@@ -59,4 +54,3 @@ jobs:
           git commit -m 'BE-USER CI/CD Pipeline Job'
           git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-MEETING.git
           git push -u origin develop
-
