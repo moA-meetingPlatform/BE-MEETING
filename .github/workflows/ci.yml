@@ -6,7 +6,7 @@ on:
       - develop
 
 env:
-  IMAGE_TAG: dev-1
+  IMAGE_TAG: dev-2
 
 jobs:
 
