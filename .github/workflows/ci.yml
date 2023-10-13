@@ -57,5 +57,6 @@ jobs:
           sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
           git add ./helm-charts/values.yaml
           git commit -m 'BE-USER CI/CD Pipeline Job'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-MEETING.git
+          git remote set-url origin https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/moA-meetingPlatform/BE-MEETING.git
           git push -u origin develop
+
