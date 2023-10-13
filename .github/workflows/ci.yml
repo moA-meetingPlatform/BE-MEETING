@@ -52,8 +52,9 @@ jobs:
 
       - name: values.yaml 수정 및 푸쉬
         run: |
-          sed -i 's/tag:.*/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
           git config user.email "awdfaf@kakao.com"
+          git config user.name "moa"  # 여기에 원하는 이름을 입력하세요.
+          sed -i 's/tag:.*$/tag: ${{ env.IMAGE_TAG }}/g' ./helm-charts/values.yaml
           git add ./helm-charts/values.yaml
           git commit -m 'BE-USER CI/CD Pipeline Job'
           git push -u origin develop
