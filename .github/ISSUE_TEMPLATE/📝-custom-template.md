@@ -1,9 +1,9 @@
 ---
 name: "\U0001F4DD Custom Template"
 about: 특별한 요청이나 다른 종류의 이슈에 대해 이 템플릿을 사용해주세요.
-title: "[Custom]"
+title: "[BE_Meeting-Custom]"
 labels: custom
-assignees: bnuri00, a0Kim
+assignees: a0Kim, bnuri00
 
 ---
 

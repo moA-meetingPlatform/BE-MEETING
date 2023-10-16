@@ -1,9 +1,9 @@
 ---
 name: "\U0001F31F Feature Request"
 about: 새로운 기능 요청이 있다면 이 템플릿을 사용해주세요.
-title: "[Feat]"
+title: "[BE_Meeting-Feat]"
 labels: enhancement
-assignees: bnuri00, a0Kim
+assignees: a0Kim, bnuri00
 
 ---
 
