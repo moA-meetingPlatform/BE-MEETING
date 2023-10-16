@@ -1,7 +1,7 @@
 package com.moa.meeting.config.exception;
 
 
-import com.moa.meeting.common.ErrorResponse;
+import com.moa.meeting.common.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.QueryTimeoutException;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +17,15 @@ public class GlobalExceptionHandler {
 
 	/* Custom Exception */
 	@ExceptionHandler(CustomException.class)
-	protected ResponseEntity<ErrorResponse> handleCustomException(final CustomException e) {
+	protected ResponseEntity<ApiResponse<Void>> handleCustomException(final CustomException e) {
 		log.error("handleCustomException: {}", e.getErrorCode());
-		return new ResponseEntity<>(new ErrorResponse(e.getErrorCode()), e.getErrorCode().getStatus());
+		return new ResponseEntity<>(ApiResponse.ofError(e.getErrorCode()), e.getErrorCode().getStatus());
 	}
 
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	protected ResponseEntity<ErrorResponse> handleHttpRequestMethodNotSupportedException() {
-		return new ResponseEntity<>(new ErrorResponse(ErrorCode.METHOD_NOT_ALLOWED), ErrorCode.METHOD_NOT_ALLOWED.getStatus());
+	protected ResponseEntity<ApiResponse<Void>> handleHttpRequestMethodNotSupportedException() {
+		return new ResponseEntity<>(ApiResponse.ofError(ErrorCode.METHOD_NOT_ALLOWED), ErrorCode.METHOD_NOT_ALLOWED.getStatus());
 	}
 
 	// security
@@ -36,22 +36,22 @@ public class GlobalExceptionHandler {
 
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ErrorResponse> methodArgumentValidException() {
-		return new ResponseEntity<>(new ErrorResponse(ErrorCode.BAD_REQUEST), ErrorCode.BAD_REQUEST.getStatus());
+	public ResponseEntity<ApiResponse<Void>> methodArgumentValidException() {
+		return new ResponseEntity<>(ApiResponse.ofError(ErrorCode.BAD_REQUEST), ErrorCode.BAD_REQUEST.getStatus());
 	}
 
 
 	@ExceptionHandler(QueryTimeoutException.class)
-	public ResponseEntity<ErrorResponse> handleQueryTimeoutException(QueryTimeoutException e) {
+	public ResponseEntity<ApiResponse<Void>> handleQueryTimeoutException(QueryTimeoutException e) {
 		log.error("fail to execute query, {}", e.getMessage());
-		return new ResponseEntity<>(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), ErrorCode.INTERNAL_SERVER_ERROR.getStatus());
+		return new ResponseEntity<>(ApiResponse.ofError(ErrorCode.INTERNAL_SERVER_ERROR), ErrorCode.INTERNAL_SERVER_ERROR.getStatus());
 	}
 
 
 	@ExceptionHandler(RuntimeException.class)
-	protected ResponseEntity<ErrorResponse> handleRuntimeException(final RuntimeException e) {
+	protected ResponseEntity<ApiResponse<Void>> handleRuntimeException(final RuntimeException e) {
 		log.error(e.getMessage(), e);
-		return new ResponseEntity<>(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR), ErrorCode.INTERNAL_SERVER_ERROR.getStatus());
+		return new ResponseEntity<>(ApiResponse.ofError(ErrorCode.INTERNAL_SERVER_ERROR), ErrorCode.INTERNAL_SERVER_ERROR.getStatus());
 	}
 
 }
