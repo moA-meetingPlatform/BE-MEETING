@@ -1,9 +1,9 @@
 ---
-name: "\U0001F31F Feature Request-누리"
-about: 새로운 기능 개발이 있다면 이 템플릿을 사용해주세요.
+name: "\U0001F31F Feature Request-아영"
+about: 기능 개발이 있다면 이 템플릿을 사용해주세요.
 title: "[BE_Meeting-Feat]"
 labels: enhancement
-assignees: bnuri00
+assignees: a0Kim
 
 ---
 
