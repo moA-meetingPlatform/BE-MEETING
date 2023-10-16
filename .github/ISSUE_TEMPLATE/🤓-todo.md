@@ -1,9 +1,9 @@
 ---
 name: "\U0001F913 TODO"
-about: 할일 작성을 할때 이 템플릿을 사용해주세요
+about: 할일 작성을 할때 이 템플릿을 사용해주세요.
 title: "[BE-MEETING]"
 labels: todo
-assignees: bnuri00, a0Kim
+assignees: a0Kim, bnuri00
 
 ---
 
