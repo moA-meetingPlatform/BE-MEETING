@@ -1,4 +1,4 @@
-package com.moa.meeting.config.db;
+package com.moa.meeting.adaptor.infrastructure.config;
 
 
 import lombok.extern.slf4j.Slf4j;
