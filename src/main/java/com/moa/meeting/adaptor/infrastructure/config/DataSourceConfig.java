@@ -1,4 +1,4 @@
-package com.moa.meeting.config.db;
+package com.moa.meeting.adaptor.infrastructure.config;
 
 
 import com.google.common.collect.ImmutableMap;

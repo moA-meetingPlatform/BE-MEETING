@@ -1,4 +1,4 @@
-package com.moa.meeting.config.exception;
+package com.moa.meeting.common.exception;
 
 
 import lombok.Getter;
