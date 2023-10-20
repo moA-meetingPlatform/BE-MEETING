@@ -18,9 +18,6 @@ public class MeetingService implements MeetingUseCase {
 	private final ModelMapperBean modelMapperBean;
 
 
-	//(String title, UUID hostUserUuid, String meetingAddress, String description, int entryFee, LocalDateTime meetingDatetime, String refundPolicy,
-	//	boolean isFcfs, boolean isOnline, boolean meetingUse, int maxParticipantNum, int maxAge, int minAge, String companyList, int themeCategoryId, String question,
-	//	String headerImageUrl, MeetingStatus meetingStatus, JoinGender joinGender) {
 	@Override
 	public MeetingGetDto createMeeting(MeetingCreateQuery meetingCreateQuery) {
 		Meeting meeting = meetingPort.createMeeting(Meeting.saveMeeting(

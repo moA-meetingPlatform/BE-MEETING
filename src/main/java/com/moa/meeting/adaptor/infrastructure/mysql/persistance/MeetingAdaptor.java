@@ -40,7 +40,7 @@ public class MeetingAdaptor implements MeetingPort {
 			meeting.getMeetingStatus(),
 			meeting.getJoinGender()
 		));
-		return Meeting.fromEntity(meetingEntity);
+		return meetingEntity.toDomain();
 	}
 
 }

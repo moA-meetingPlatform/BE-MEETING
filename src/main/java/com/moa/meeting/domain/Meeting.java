@@ -1,7 +1,6 @@
 package com.moa.meeting.domain;
 
 
-import com.moa.meeting.adaptor.infrastructure.mysql.entity.MeetingEntity;
 import com.moa.meeting.domain.enums.JoinGender;
 import com.moa.meeting.domain.enums.MeetingStatus;
 import lombok.AllArgsConstructor;
@@ -9,11 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Getter
@@ -52,6 +48,30 @@ public class Meeting {
 	private LocalDateTime updateDatetime;
 
 
+	/**
+	 * 모임 생성
+	 *
+	 * @param title                 모임 제목
+	 * @param hostUserUuid          모임 개설자 uuid
+	 * @param meetingAddress        모임 주소
+	 * @param description           모임 설명
+	 * @param entryFee              모임 입장료
+	 * @param meetingDatetime       모임 시작 시간
+	 * @param refundPolicy          환불 정책
+	 * @param isFcfs                선착순 여부
+	 * @param isOnline              온라인 여부
+	 * @param maxParticipantNum     최대 참가자 수
+	 * @param maxAge                최대 나이
+	 * @param minAge                최소 나이
+	 * @param companyList           참가 가능한 회사 그룹 리스트
+	 * @param entreFeeInfoIdList    참가비 정보 항목 id 리스트 (모임 비용이 있을 경우 설정될 수 있음)
+	 * @param entreFeeInfoEtcString 참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)
+	 * @param themeCategoryId       테마 카테고리 id
+	 * @param question              모임 참가시 필요한 질문(선착순 아닐 경우)
+	 * @param headerImageUrl        모임 헤더 이미지 url
+	 * @param joinGender            참가 가능한 성별
+	 * @return Meeting Meeting Domain
+	 */
 	public static Meeting saveMeeting(String title, UUID hostUserUuid, String meetingAddress, String description, int entryFee, LocalDateTime meetingDatetime, String refundPolicy,
 		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entreFeeInfoIdList, String entreFeeInfoEtcString, int themeCategoryId,
 		String question,
@@ -78,55 +98,6 @@ public class Meeting {
 			.headerImageUrl(headerImageUrl)
 			.meetingStatus(MeetingStatus.RECRUIT_IN_PROGRESS)
 			.joinGender(joinGender)
-			.build();
-	}
-
-
-	public static Meeting fromEntity(MeetingEntity meetingEntity) {
-		String companyListStr = meetingEntity.getCompanyList();
-		String entreFeeInfoIdListStr = meetingEntity.getEntreFeeInfoIdList();
-		List<String> companyList;
-		List<Integer> entreFeeInfoIdList = Collections.emptyList();
-
-		if (companyListStr == null) {
-			companyList = Collections.singletonList("ALL");
-		} else {
-			companyList = Arrays.asList(companyListStr.split(",")); // 구분자 : ','
-		}
-
-		if (entreFeeInfoIdListStr != null) {
-			String[] entreFeeInfoIdListStrArr = entreFeeInfoIdListStr.split(",");
-			entreFeeInfoIdList = Arrays.stream(entreFeeInfoIdListStrArr)    // stream of String
-				.map(Integer::valueOf) // stream of Integer
-				.collect(Collectors.toList());
-		}
-
-		return Meeting.builder()
-			.id(meetingEntity.getId())
-			.title(meetingEntity.getTitle())
-			.hostUserUuid(meetingEntity.getHostUserUuid())
-			.meetingAddress(meetingEntity.getMeetingAddress())
-			.description(meetingEntity.getDescription())
-			.entryFee(meetingEntity.getEntryFee())
-			.meetingDatetime(meetingEntity.getMeetingDatetime())
-			.refundPolicy(meetingEntity.getRefundPolicy())
-			.isFcfs(meetingEntity.getIsFcfs())
-			.isOnline(meetingEntity.getIsOnline())
-			.meetingUse(meetingEntity.getMeetingUse())
-			.maxParticipantNum(meetingEntity.getMaxParticipantNum())
-			.currParticipantNum(meetingEntity.getCurrParticipantNum())
-			.maxAge(meetingEntity.getMaxAge())
-			.minAge(meetingEntity.getMinAge())
-			.companyList(companyList)
-			.entreFeeInfoIdList(entreFeeInfoIdList)
-			.entreFeeInfoEtcString(meetingEntity.getEntreFeeInfoEtcString())
-			.themeCategoryId(meetingEntity.getThemeCategoryId())
-			.question(meetingEntity.getQuestion())
-			.headerImageUrl(meetingEntity.getHeaderImageUrl())
-			.meetingStatus(meetingEntity.getMeetingStatus())
-			.joinGender(meetingEntity.getJoinGender())
-			.createDatetime(meetingEntity.getCreateDatetime())
-			.updateDatetime(meetingEntity.getUpdateDatetime())
 			.build();
 	}
 
