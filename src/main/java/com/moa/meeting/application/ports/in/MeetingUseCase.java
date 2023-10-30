@@ -32,8 +32,8 @@ public interface MeetingUseCase {
 		private Integer maxAge;
 		private Integer minAge;
 		private List<String> companyList;
-		private List<Integer> entreFeeInfoIdList;
-		private String entreFeeInfoEtcString;
+		private List<Integer> entryFeeInfoIdList;
+		private String entryFeeInfoEtcString;
 		private Integer themeCategoryId;
 		private String question;
 		private String headerImageUrl;
@@ -55,8 +55,8 @@ public interface MeetingUseCase {
 				.maxAge(request.getMaxAge())
 				.minAge(request.getMinAge())
 				.companyList(request.getCompanyList())
-				.entreFeeInfoIdList(request.getEntreFeeInfoIdList())
-				.entreFeeInfoEtcString(request.getEntreFeeInfoEtcString())
+				.entryFeeInfoIdList(request.getEntryFeeInfoIdList())
+				.entryFeeInfoEtcString(request.getEntryFeeInfoEtcString())
 				.themeCategoryId(request.getThemeCategoryId())
 				.question(request.getQuestion())
 				.headerImageUrl(request.getHeaderImageUrl())

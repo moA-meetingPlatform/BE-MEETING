@@ -76,11 +76,11 @@ public class MeetingEntity extends BaseDateTime {
 	@Column(name = "company_list", length = 255)
 	private String companyList; // 선택가능 회사 리스트, 구분자 : ','
 
-	@Column(name = "entre_fee_info_id_list", length = 50)
-	private String entreFeeInfoIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
+	@Column(name = "entry_fee_info_id_list", length = 50)
+	private String entryFeeInfoIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
 
-	@Column(name = "entre_fee_info_etc_string", length = 50)
-	private String entreFeeInfoEtcString;   // 참가비 정보 기타 항목 string
+	@Column(name = "entry_fee_info_etc_string", length = 50)
+	private String entryFeeInfoEtcString;   // 참가비 정보 기타 항목 string
 
 	@Column(name = "theme_category_id")
 	private Integer themeCategoryId;
@@ -116,8 +116,8 @@ public class MeetingEntity extends BaseDateTime {
 	 * @param maxAge
 	 * @param minAge
 	 * @param companyList
-	 * @param entreFeeInfoIdList
-	 * @param entreFeeInfoEtcString
+	 * @param entryFeeInfoIdList
+	 * @param entryFeeInfoEtcString
 	 * @param themeCategoryId
 	 * @param question
 	 * @param headerImageUrl
@@ -126,22 +126,22 @@ public class MeetingEntity extends BaseDateTime {
 	 * @return MeetingEntity Meeting Domain JPA 구현체
 	 */
 	public static MeetingEntity createMeeting(String title, UUID hostUserUuid, String meetingAddress, String description, int entryFee, LocalDateTime meetingDatetime, String refundPolicy,
-		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entreFeeInfoIdList, String entreFeeInfoEtcString, int themeCategoryId,
+		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entryFeeInfoIdList, String entryFeeInfoEtcString, int themeCategoryId,
 		String question,
 		String headerImageUrl, MeetingStatus meetingStatus, JoinGender joinGender) {
 
 		String CompanyListStr = null;
-		String entreFeeInfoIdListStr = null;
+		String entryFeeInfoIdListStr = null;
 
 		//
 		if (companyList != null) {
 			// 회사 그룹 List ->  String list to String, delemeter : ','
 			CompanyListStr = String.join(",", companyList);
 		}
-		if (entreFeeInfoIdList != null) {
+		if (entryFeeInfoIdList != null) {
 			// 참가비 id List -> Integer list to String, delemeter : ','
-			entreFeeInfoIdListStr = entreFeeInfoIdList.toString().replaceAll(" ", "");
-			entreFeeInfoIdListStr = entreFeeInfoIdListStr.substring(1, entreFeeInfoIdListStr.length() - 1);
+			entryFeeInfoIdListStr = entryFeeInfoIdList.toString().replaceAll(" ", "");
+			entryFeeInfoIdListStr = entryFeeInfoIdListStr.substring(1, entryFeeInfoIdListStr.length() - 1);
 		}
 
 		return MeetingEntity.builder()
@@ -160,8 +160,8 @@ public class MeetingEntity extends BaseDateTime {
 			.maxAge(maxAge)
 			.minAge(minAge)
 			.companyList(CompanyListStr)
-			.entreFeeInfoIdList(entreFeeInfoIdListStr)
-			.entreFeeInfoEtcString(entreFeeInfoEtcString)
+			.entryFeeInfoIdList(entryFeeInfoIdListStr)
+			.entryFeeInfoEtcString(entryFeeInfoEtcString)
 			.themeCategoryId(themeCategoryId)
 			.question(question)
 			.headerImageUrl(headerImageUrl)
@@ -179,11 +179,11 @@ public class MeetingEntity extends BaseDateTime {
 	 * @return Meeting 모임 도메인
 	 */
 	public Meeting toDomain() {
-		// String으로 저장된 companyList, entreFeeInfoIdList를 List로 변환
+		// String으로 저장된 companyList, entryFeeInfoIdList를 List로 변환
 		String companyListStr = this.companyList;
-		String entreFeeInfoIdListStr = this.entreFeeInfoIdList;
+		String entryFeeInfoIdListStr = this.entryFeeInfoIdList;
 		List<String> convertCompanyList;
-		List<Integer> convertEntreFeeInfoIdList = Collections.emptyList();
+		List<Integer> convertentryFeeInfoIdList = Collections.emptyList();
 
 		if (companyListStr == null) {
 			// 회사그룹 없을 경우 모든 회사로 설정
@@ -192,9 +192,9 @@ public class MeetingEntity extends BaseDateTime {
 			convertCompanyList = Arrays.asList(companyListStr.split(",")); // 구분자 : ','
 		}
 
-		if (entreFeeInfoIdListStr != null) {
-			String[] entreFeeInfoIdListStrArr = entreFeeInfoIdListStr.split(",");
-			convertEntreFeeInfoIdList = Arrays.stream(entreFeeInfoIdListStrArr)    // stream of String
+		if (entryFeeInfoIdListStr != null) {
+			String[] entryFeeInfoIdListStrArr = entryFeeInfoIdListStr.split(",");
+			convertentryFeeInfoIdList = Arrays.stream(entryFeeInfoIdListStrArr)    // stream of String
 				.map(Integer::valueOf) // stream of Integer
 				.collect(Collectors.toList());
 		}
@@ -216,8 +216,8 @@ public class MeetingEntity extends BaseDateTime {
 			.maxAge(this.maxAge)
 			.minAge(this.minAge)
 			.companyList(convertCompanyList)
-			.entreFeeInfoIdList(convertEntreFeeInfoIdList)
-			.entreFeeInfoEtcString(this.entreFeeInfoEtcString)
+			.entryFeeInfoIdList(convertentryFeeInfoIdList)
+			.entryFeeInfoEtcString(this.entryFeeInfoEtcString)
 			.themeCategoryId(this.themeCategoryId)
 			.question(this.question)
 			.headerImageUrl(this.headerImageUrl)

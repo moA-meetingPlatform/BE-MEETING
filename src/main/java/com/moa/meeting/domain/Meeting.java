@@ -33,8 +33,8 @@ public class Meeting {
 	private Integer maxAge;
 	private Integer minAge;
 	private List<String> companyList;
-	private List<Integer> entreFeeInfoIdList;   // 참가비 정보 항목 id 리스트
-	private String entreFeeInfoEtcString;   // 참가비 정보 기타 항목 string
+	private List<Integer> entryFeeInfoIdList;   // 참가비 정보 항목 id 리스트
+	private String entryFeeInfoEtcString;   // 참가비 정보 기타 항목 string
 	private Integer themeCategoryId;
 	private String question;
 	private String headerImageUrl;
@@ -64,8 +64,8 @@ public class Meeting {
 	 * @param maxAge                최대 나이
 	 * @param minAge                최소 나이
 	 * @param companyList           참가 가능한 회사 그룹 리스트
-	 * @param entreFeeInfoIdList    참가비 정보 항목 id 리스트 (모임 비용이 있을 경우 설정될 수 있음)
-	 * @param entreFeeInfoEtcString 참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)
+	 * @param entryFeeInfoIdList    참가비 정보 항목 id 리스트 (모임 비용이 있을 경우 설정될 수 있음)
+	 * @param entryFeeInfoEtcString 참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)
 	 * @param themeCategoryId       테마 카테고리 id
 	 * @param question              모임 참가시 필요한 질문(선착순 아닐 경우)
 	 * @param headerImageUrl        모임 헤더 이미지 url
@@ -73,7 +73,7 @@ public class Meeting {
 	 * @return Meeting Meeting Domain
 	 */
 	public static Meeting saveMeeting(String title, UUID hostUserUuid, String meetingAddress, String description, int entryFee, LocalDateTime meetingDatetime, String refundPolicy,
-		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entreFeeInfoIdList, String entreFeeInfoEtcString, int themeCategoryId,
+		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entryFeeInfoIdList, String entryFeeInfoEtcString, int themeCategoryId,
 		String question,
 		String headerImageUrl, JoinGender joinGender) {
 		return Meeting.builder()
@@ -91,8 +91,8 @@ public class Meeting {
 			.maxAge(maxAge)
 			.minAge(minAge)
 			.companyList(companyList)
-			.entreFeeInfoIdList(entreFeeInfoIdList)
-			.entreFeeInfoEtcString(entreFeeInfoEtcString)
+			.entryFeeInfoIdList(entryFeeInfoIdList)
+			.entryFeeInfoEtcString(entryFeeInfoEtcString)
 			.themeCategoryId(themeCategoryId)
 			.question(question)
 			.headerImageUrl(headerImageUrl)
