@@ -1,98 +1,89 @@
 package com.moa.meeting.domain;
 
 
+import com.moa.global.domain.BaseDateTime;
 import com.moa.meeting.domain.enums.CanParticipateGender;
 import com.moa.meeting.domain.enums.MeetingStatus;
+import com.moa.meeting.infrastructure.converter.BaseEnumConverter;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 
 @Getter
-@Builder
 @AllArgsConstructor
-public class Meeting {
+@NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "meeting")
+public class Meeting extends BaseDateTime {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(name = "meeting_title", length = 40)
 	private String meetingTitle;
+
+	@Column(name = "host_user_uuid")
 	private UUID hostUserUuid;
+
+	@Column(name = "meeting_address", length = 255)
 	private String meetingPlaceAddress;
+
+	@Column(name = "meeting_description", columnDefinition = "TEXT")
 	private String meetingDescription;
+
+	@Column(name = "entry_fee")
 	private Integer meetingEntryFee;   // 입장료
+
+	@Column(name = "meeting_datetime")
 	private LocalDateTime meetingDatetime;
+
+	@Column(name = "is_fcfs")
 	private Boolean firstComeFirstServed; // 선착순 여부
+
+	@Column(name = "is_online")
 	private Boolean onlineStatus;   // 온라인 여부
+
+	@Column(name = "max_participant_num")
 	private Integer maxParticipantsCount;  // 최대 참가자 수
+
+	@Column(name = "curr_participant_num")
 	private Integer currentParticipantsCount; // 현재 참가자 수
+
+	@Column(name = "max_age")
 	private Integer maxAgeLimit;
+
+	@Column(name = "min_age")
 	private Integer minAgeLimit;
-	private List<Integer> canParticipateCompanyList;
-	private List<Integer> entryFeeInfomationIdList;   // 참가비 정보 항목 id 리스트
+
+	@Column(name = "can_participate_company_list", length = 255)
+	private String canParticipateCompanyList; // 선택가능 회사그룹 id 리스트, 구분자 : ','
+
+	@Column(name = "entry_fee_info_id_list", length = 50)
+	private String entryFeeInfomationIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
+
+	@Column(name = "entry_fee_info_etc_string", length = 50)
 	private String entryFeeInfomationEtcString;   // 참가비 정보 기타 항목 string
-	private String meetingParticipationQuestion; // 모임 참가시 필요한 질문(선착순 아닐 경우)
+
+	@Column(name = "meeting_participation_question", length = 40)
+	private String meetingParticipationQuestion;
+
+	@Column(name = "header_image_url", length = 255)
 	private String meetingHeaderImageUrl;
 
-	// enum
+	@Convert(converter = BaseEnumConverter.MeetingStatusConverter.class)
+	@Column(name = "meeting_status", length = 2)
 	private MeetingStatus meetingStatus;
+
+	@Convert(converter = BaseEnumConverter.CanParticipateGenderConverter.class)
+	@Column(name = "join_gender", length = 1)
 	private CanParticipateGender canParticipateGender;
-
-	// create, update datetime
-	private LocalDateTime createDatetime;
-	private LocalDateTime updateDatetime;
-
-
-	/**
-	 * 모임 생성
-	 *
-	 * @param meetingTitle                 모임 제목
-	 * @param hostUserUuid                 모임 개설자 uuid
-	 * @param meetingPlaceAddress          모임 주소
-	 * @param meetingDescription           모임 설명
-	 * @param meetingEntryFee              모임 입장료
-	 * @param meetingDatetime              모임 시작 시간
-	 * @param firstComeFirstServed         선착순 여부
-	 * @param onlineStatus                 온라인 여부
-	 * @param maxParticipantsCount         최대 참가자 수
-	 * @param maxAgeLimit                  최대 나이
-	 * @param minAgeLimit                  최소 나이
-	 * @param canParticipateCompanyList    참가 가능한 회사 그룹 리스트
-	 * @param entryFeeInfomationIdList     참가비 정보 항목 id 리스트 (모임 비용이 있을 경우 설정될 수 있음)
-	 * @param entryFeeInfomationEtcString  참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)
-	 * @param meetingParticipationQuestion 모임 참가시 필요한 질문(선착순 아닐 경우)
-	 * @param meetingHeaderImageUrl        모임 헤더 이미지 url
-	 * @param canParticipateGender         참가 가능한 성별
-	 * @return Meeting Domain
-	 */
-	public static Meeting saveMeeting(String meetingTitle, UUID hostUserUuid, String meetingPlaceAddress, String meetingDescription, int meetingEntryFee, LocalDateTime meetingDatetime,
-		boolean firstComeFirstServed, boolean onlineStatus, int maxParticipantsCount, int maxAgeLimit, int minAgeLimit, List<Integer> canParticipateCompanyList, List<Integer> entryFeeInfomationIdList,
-		String entryFeeInfomationEtcString,
-		String meetingParticipationQuestion,
-		String meetingHeaderImageUrl, CanParticipateGender canParticipateGender) {
-		return Meeting.builder()
-			.meetingTitle(meetingTitle)
-			.hostUserUuid(hostUserUuid)
-			.meetingPlaceAddress(meetingPlaceAddress)
-			.meetingDescription(meetingDescription)
-			.meetingEntryFee(meetingEntryFee)
-			.meetingDatetime(meetingDatetime)
-			.firstComeFirstServed(firstComeFirstServed)
-			.onlineStatus(onlineStatus)
-			.maxParticipantsCount(maxParticipantsCount)
-			.currentParticipantsCount(0)
-			.maxAgeLimit(maxAgeLimit)
-			.minAgeLimit(minAgeLimit)
-			.canParticipateCompanyList(canParticipateCompanyList)
-			.entryFeeInfomationIdList(entryFeeInfomationIdList)
-			.entryFeeInfomationEtcString(entryFeeInfomationEtcString)
-			.meetingParticipationQuestion(meetingParticipationQuestion)
-			.meetingHeaderImageUrl(meetingHeaderImageUrl)
-			.meetingStatus(MeetingStatus.RECRUIT_IN_PROGRESS)
-			.canParticipateGender(canParticipateGender)
-			.build();
-	}
 
 }
