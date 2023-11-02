@@ -1,7 +1,7 @@
 package com.moa.meeting.domain.enums;
 
 
-import com.moa.meeting.common.BaseEnum;
+import com.moa.global.BaseEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
