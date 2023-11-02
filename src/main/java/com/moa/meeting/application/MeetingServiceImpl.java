@@ -1,10 +1,13 @@
 package com.moa.meeting.application;
 
 
+import com.moa.global.exception.CustomException;
+import com.moa.global.exception.ErrorCode;
 import com.moa.meeting.domain.Meeting;
 import com.moa.meeting.domain.enums.MeetingStatus;
 import com.moa.meeting.dto.MeetingCreateDto;
 import com.moa.meeting.dto.MeetingGetDto;
+import com.moa.meeting.dto.MeetingSimpleGetDto;
 import com.moa.meeting.infrastructure.mysql.MeetingRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -61,6 +64,13 @@ public class MeetingServiceImpl implements MeetingService {
 
 		meeting = meetingRepository.save(meeting);
 		return modelMapper.map(meeting, MeetingGetDto.class);
+	}
+
+
+	@Override
+	public MeetingSimpleGetDto getMeetingSimple(Long id) {
+		Meeting meeting = meetingRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_RESOURCE));
+		return MeetingSimpleGetDto.fromEntity(meeting);
 	}
 
 }
