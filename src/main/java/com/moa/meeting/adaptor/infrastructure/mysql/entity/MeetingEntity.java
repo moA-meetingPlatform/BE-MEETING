@@ -3,7 +3,7 @@ package com.moa.meeting.adaptor.infrastructure.mysql.entity;
 
 import com.moa.meeting.adaptor.infrastructure.mysql.converter.BaseEnumConverter;
 import com.moa.meeting.domain.Meeting;
-import com.moa.meeting.domain.enums.JoinGender;
+import com.moa.meeting.domain.enums.CanParticipateGender;
 import com.moa.meeting.domain.enums.MeetingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,142 +31,130 @@ public class MeetingEntity extends BaseDateTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "title", length = 40)
-	private String title;
+	@Column(name = "meeting_title", length = 40)
+	private String meetingTitle;
 
 	@Column(name = "host_user_uuid")
 	private UUID hostUserUuid;
 
 	@Column(name = "meeting_address", length = 255)
-	private String meetingAddress;
+	private String meetingPlaceAddress;
 
-	@Column(columnDefinition = "TEXT")
-	private String description;
+	@Column(name = "meeting_description", columnDefinition = "TEXT")
+	private String meetingDescription;
 
 	@Column(name = "entry_fee")
-	private Integer entryFee;   // 입장료
+	private Integer meetingEntryFee;   // 입장료
 
 	@Column(name = "meeting_datetime")
 	private LocalDateTime meetingDatetime;
 
-	@Column(columnDefinition = "TEXT", name = "refund_policy")
-	private String refundPolicy;
-
 	@Column(name = "is_fcfs")
-	private Boolean isFcfs; // 선착순 여부
+	private Boolean firstComeFirstServed; // 선착순 여부
 
 	@Column(name = "is_online")
-	private Boolean isOnline;   // 온라인 여부
-
-	@Column(name = "meeting_use")
-	private Boolean meetingUse; // 모임 사용 여부
+	private Boolean onlineStatus;   // 온라인 여부
 
 	@Column(name = "max_participant_num")
-	private Integer maxParticipantNum;  // 최대 참가자 수
+	private Integer maxParticipantsCount;  // 최대 참가자 수
 
 	@Column(name = "curr_participant_num")
-	private Integer currParticipantNum; // 현재 참가자 수
+	private Integer currentParticipantsCount; // 현재 참가자 수
 
 	@Column(name = "max_age")
-	private Integer maxAge;
+	private Integer maxAgeLimit;
 
 	@Column(name = "min_age")
-	private Integer minAge;
+	private Integer minAgeLimit;
 
-	@Column(name = "company_list", length = 255)
-	private String companyList; // 선택가능 회사 리스트, 구분자 : ','
+	@Column(name = "can_participate_company_list", length = 255)
+	private String canParticipateCompanyList; // 선택가능 회사그룹 id 리스트, 구분자 : ','
 
 	@Column(name = "entry_fee_info_id_list", length = 50)
-	private String entryFeeInfoIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
+	private String entryFeeInfomationIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
 
 	@Column(name = "entry_fee_info_etc_string", length = 50)
-	private String entryFeeInfoEtcString;   // 참가비 정보 기타 항목 string
+	private String entryFeeInfomationEtcString;   // 참가비 정보 기타 항목 string
 
-	@Column(name = "theme_category_id")
-	private Integer themeCategoryId;
-
-	@Column(name = "question", length = 40)
-	private String question;
+	@Column(name = "meeting_participation_question", length = 40)
+	private String meetingParticipationQuestion;
 
 	@Column(name = "header_image_url", length = 255)
-	private String headerImageUrl;
+	private String meetingHeaderImageUrl;
 
 	@Convert(converter = BaseEnumConverter.MeetingStatusConverter.class)
 	@Column(name = "meeting_status", length = 2)
 	private MeetingStatus meetingStatus;
 
-	@Convert(converter = BaseEnumConverter.JoinGenderConverter.class)
+	@Convert(converter = BaseEnumConverter.CanParticipateGenderConverter.class)
 	@Column(name = "join_gender", length = 1)
-	private JoinGender joinGender;
+	private CanParticipateGender canParticipateGender;
 
 
 	/**
 	 * 모임 생성
 	 *
-	 * @param title
+	 * @param meetingTitle
 	 * @param hostUserUuid
-	 * @param meetingAddress
-	 * @param description
-	 * @param entryFee
+	 * @param meetingPlaceAddress
+	 * @param meetingDescription
+	 * @param meetingEntryFee
 	 * @param meetingDatetime
-	 * @param refundPolicy
-	 * @param isFcfs
-	 * @param isOnline
-	 * @param maxParticipantNum
-	 * @param maxAge
-	 * @param minAge
-	 * @param companyList
-	 * @param entryFeeInfoIdList
-	 * @param entryFeeInfoEtcString
-	 * @param themeCategoryId
-	 * @param question
-	 * @param headerImageUrl
+	 * @param firstComeFirstServed
+	 * @param onlineStatus
+	 * @param maxParticipantsCount
+	 * @param maxAgeLimit
+	 * @param minAgeLimit
+	 * @param canParticipateCompanyList
+	 * @param entryFeeInfomationIdList
+	 * @param entryFeeInfomationEtcString
+	 * @param meetingParticipationQuestion
+	 * @param meetingHeaderImageUrl
 	 * @param meetingStatus
-	 * @param joinGender
+	 * @param canParticipateGender
 	 * @return MeetingEntity Meeting Domain JPA 구현체
 	 */
-	public static MeetingEntity createMeeting(String title, UUID hostUserUuid, String meetingAddress, String description, int entryFee, LocalDateTime meetingDatetime, String refundPolicy,
-		boolean isFcfs, boolean isOnline, int maxParticipantNum, int maxAge, int minAge, List<String> companyList, List<Integer> entryFeeInfoIdList, String entryFeeInfoEtcString, int themeCategoryId,
-		String question,
-		String headerImageUrl, MeetingStatus meetingStatus, JoinGender joinGender) {
+	public static MeetingEntity createMeeting(String meetingTitle, UUID hostUserUuid, String meetingPlaceAddress, String meetingDescription, int meetingEntryFee, LocalDateTime meetingDatetime,
+		boolean firstComeFirstServed, boolean onlineStatus, int maxParticipantsCount, int maxAgeLimit, int minAgeLimit, List<Integer> canParticipateCompanyList, List<Integer> entryFeeInfomationIdList,
+		String entryFeeInfomationEtcString,
+		String meetingParticipationQuestion,
+		String meetingHeaderImageUrl, MeetingStatus meetingStatus, CanParticipateGender canParticipateGender) {
 
 		String CompanyListStr = null;
-		String entryFeeInfoIdListStr = null;
+		String entryFeeInfomationIdListStr = null;
 
 		//
-		if (companyList != null) {
-			// 회사 그룹 List ->  String list to String, delemeter : ','
-			CompanyListStr = String.join(",", companyList);
+		if (canParticipateCompanyList != null) {
+			// 회사 그룹 List ->  Integer list to String, delemeter : ','
+			CompanyListStr = canParticipateCompanyList.toString().replaceAll(" ", "");   // 공백 제거
+			CompanyListStr = CompanyListStr.substring(1, CompanyListStr.length() - 1);  // [ ] 제거
 		}
-		if (entryFeeInfoIdList != null) {
+		if (entryFeeInfomationIdList != null) {
 			// 참가비 id List -> Integer list to String, delemeter : ','
-			entryFeeInfoIdListStr = entryFeeInfoIdList.toString().replaceAll(" ", "");
-			entryFeeInfoIdListStr = entryFeeInfoIdListStr.substring(1, entryFeeInfoIdListStr.length() - 1);
+			entryFeeInfomationIdListStr = entryFeeInfomationIdList.toString().replaceAll(" ", "");
+			entryFeeInfomationIdListStr = entryFeeInfomationIdListStr.substring(1, entryFeeInfomationIdListStr.length() - 1);
 		}
 
 		return MeetingEntity.builder()
-			.title(title)
+			.meetingTitle(meetingTitle)
 			.hostUserUuid(hostUserUuid)
-			.meetingAddress(meetingAddress)
-			.description(description)
-			.entryFee(entryFee)
+			.meetingPlaceAddress(meetingPlaceAddress)
+			.meetingDescription(meetingDescription)
+			.meetingEntryFee(meetingEntryFee)
 			.meetingDatetime(meetingDatetime)
-			.refundPolicy(refundPolicy)
-			.isFcfs(isFcfs)
-			.isOnline(isOnline)
-			.meetingUse(true)
-			.maxParticipantNum(maxParticipantNum)
-			.currParticipantNum(0)
-			.maxAge(maxAge)
-			.minAge(minAge)
-			.companyList(CompanyListStr)
-			.entryFeeInfoIdList(entryFeeInfoIdListStr)
-			.entryFeeInfoEtcString(entryFeeInfoEtcString)
-			.themeCategoryId(themeCategoryId)
-			.question(question)
-			.headerImageUrl(headerImageUrl)
-			.meetingStatus(meetingStatus)
-			.joinGender(joinGender)
+			.firstComeFirstServed(firstComeFirstServed)
+			.onlineStatus(onlineStatus)
+			.maxParticipantsCount(maxParticipantsCount)
+			.currentParticipantsCount(0)
+			.maxAgeLimit(maxAgeLimit)
+			.minAgeLimit(minAgeLimit)
+			.canParticipateCompanyList(CompanyListStr)
+			.entryFeeInfomationIdList(entryFeeInfomationIdListStr)
+			.entryFeeInfomationEtcString(entryFeeInfomationEtcString)
+			.meetingParticipationQuestion(meetingParticipationQuestion)
+			.meetingHeaderImageUrl(meetingHeaderImageUrl)
+			.meetingStatus(MeetingStatus.RECRUIT_IN_PROGRESS)
+			.canParticipateGender(canParticipateGender)
 			.build();
 	}
 
@@ -179,50 +167,54 @@ public class MeetingEntity extends BaseDateTime {
 	 * @return Meeting 모임 도메인
 	 */
 	public Meeting toDomain() {
-		// String으로 저장된 companyList, entryFeeInfoIdList를 List로 변환
-		String companyListStr = this.companyList;
-		String entryFeeInfoIdListStr = this.entryFeeInfoIdList;
-		List<String> convertCompanyList;
-		List<Integer> convertentryFeeInfoIdList = Collections.emptyList();
+		// String으로 저장된 canParticipateCompanyList, entryFeeInfomationIdList를 List로 변환
+		String canParticipateCompanyListStr = this.canParticipateCompanyList;
+		String entryFeeInfomationIdListStr = this.entryFeeInfomationIdList;
+		List<Integer> convertCanParticipateCompanyList = null;
+		List<Integer> convertEntryFeeInfomationIdList = Collections.emptyList();
 
-		if (companyListStr == null) {
-			// 회사그룹 없을 경우 모든 회사로 설정
-			convertCompanyList = Collections.singletonList("ALL");
-		} else {
-			convertCompanyList = Arrays.asList(companyListStr.split(",")); // 구분자 : ','
+		//		if (canParticipateCompanyListStr == null) {
+		//			// 회사그룹 없을 경우 모든 회사로 설정
+		//			convertCanParticipateCompanyListStr = Collections.singletonList("ALL");
+		//		} else {
+		//			convertCanParticipateCompanyListStr = Arrays.asList(canParticipateCompanyListStr.split(",")); // 구분자 : ','
+		//		}
+
+		if (canParticipateCompanyListStr != null) {
+			String[] canParticipateCompanyListStrArr = canParticipateCompanyListStr.split(",");
+			convertCanParticipateCompanyList = Arrays.stream(canParticipateCompanyListStrArr)    // stream of String
+				.map(Integer::valueOf) // stream of Integer
+				.collect(Collectors.toList());
 		}
 
-		if (entryFeeInfoIdListStr != null) {
-			String[] entryFeeInfoIdListStrArr = entryFeeInfoIdListStr.split(",");
-			convertentryFeeInfoIdList = Arrays.stream(entryFeeInfoIdListStrArr)    // stream of String
+		if (entryFeeInfomationIdListStr != null) {
+			String[] entryFeeInfomationIdListStrArr = entryFeeInfomationIdListStr.split(",");
+			convertEntryFeeInfomationIdList = Arrays.stream(entryFeeInfomationIdListStrArr)    // stream of String
 				.map(Integer::valueOf) // stream of Integer
 				.collect(Collectors.toList());
 		}
 
 		return Meeting.builder()
 			.id(this.id)
-			.title(this.title)
+			.meetingTitle(this.meetingTitle)
 			.hostUserUuid(this.hostUserUuid)
-			.meetingAddress(this.meetingAddress)
-			.description(this.description)
-			.entryFee(this.entryFee)
+			.meetingPlaceAddress(this.meetingPlaceAddress)
+			.meetingDescription(this.meetingDescription)
+			.meetingEntryFee(this.meetingEntryFee)
 			.meetingDatetime(this.meetingDatetime)
-			.refundPolicy(this.refundPolicy)
-			.isFcfs(this.isFcfs)
-			.isOnline(this.isOnline)
-			.meetingUse(this.meetingUse)
-			.maxParticipantNum(this.maxParticipantNum)
-			.currParticipantNum(this.currParticipantNum)
-			.maxAge(this.maxAge)
-			.minAge(this.minAge)
-			.companyList(convertCompanyList)
-			.entryFeeInfoIdList(convertentryFeeInfoIdList)
-			.entryFeeInfoEtcString(this.entryFeeInfoEtcString)
-			.themeCategoryId(this.themeCategoryId)
-			.question(this.question)
-			.headerImageUrl(this.headerImageUrl)
+			.firstComeFirstServed(this.firstComeFirstServed)
+			.onlineStatus(this.onlineStatus)
+			.maxParticipantsCount(this.maxParticipantsCount)
+			.currentParticipantsCount(this.currentParticipantsCount)
+			.maxAgeLimit(this.maxAgeLimit)
+			.minAgeLimit(this.minAgeLimit)
+			.canParticipateCompanyList(convertCanParticipateCompanyList)
+			.entryFeeInfomationIdList(convertEntryFeeInfomationIdList)
+			.entryFeeInfomationEtcString(this.entryFeeInfomationEtcString)
+			.meetingParticipationQuestion(this.meetingParticipationQuestion)
+			.meetingHeaderImageUrl(this.meetingHeaderImageUrl)
 			.meetingStatus(this.meetingStatus)
-			.joinGender(this.joinGender)
+			.canParticipateGender(this.canParticipateGender)
 			.createDatetime(this.getCreateDatetime())
 			.updateDatetime(this.getUpdateDatetime())
 			.build();
