@@ -1,16 +1,16 @@
 package com.moa.meeting.adaptor.infrastructure.mysql.converter;
 
 
-import com.moa.meeting.domain.enums.JoinGender;
+import com.moa.meeting.domain.enums.CanParticipateGender;
 import com.moa.meeting.domain.enums.MeetingStatus;
 
 
 public class BaseEnumConverter {
 
-	public static class JoinGenderConverter extends AbstractBaseEnumConverter<JoinGender, Character, String> {
+	public static class CanParticipateGenderConverter extends AbstractBaseEnumConverter<CanParticipateGender, Character, String> {
 
-		public JoinGenderConverter() {
-			super(JoinGender.class);
+		public CanParticipateGenderConverter() {
+			super(CanParticipateGender.class);
 		}
 
 	}

@@ -3,7 +3,7 @@ package com.moa.meeting.application.ports.in;
 
 import com.moa.meeting.adaptor.web.request.MeetingCreateReq;
 import com.moa.meeting.application.ports.out.dto.MeetingGetDto;
-import com.moa.meeting.domain.enums.JoinGender;
+import com.moa.meeting.domain.enums.CanParticipateGender;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,48 +19,44 @@ public interface MeetingUseCase {
 	@Builder
 	class MeetingCreateQuery {
 
-		private String title;
+		private String meetingTitle;
 		private UUID hostUserUuid;
-		private String meetingAddress;
-		private String description;
-		private Integer entryFee;
+		private String meetingPlaceAddress;
+		private String meetingDescription;
+		private Integer meetingEntryFee;
 		private LocalDateTime meetingDatetime;
-		private String refundPolicy;
-		private Boolean isFcfs;
-		private Boolean isOnline;
-		private Integer maxParticipantNum;
-		private Integer maxAge;
-		private Integer minAge;
-		private List<String> companyList;
-		private List<Integer> entryFeeInfoIdList;
-		private String entryFeeInfoEtcString;
-		private Integer themeCategoryId;
-		private String question;
-		private String headerImageUrl;
-		private JoinGender joinGender;
+		private Boolean firstComeFirstServed;
+		private Boolean onlineStatus;
+		private Integer maxParticipantsCount;
+		private Integer maxAgeLimit;
+		private Integer minAgeLimit;
+		private List<Integer> canParticipateCompanyList;
+		private List<Integer> entryFeeInfomationIdList;
+		private String entryFeeInfomationEtcString;
+		private String meetingParticipationQuestion;
+		private String meetingHeaderImageUrl;
+		private CanParticipateGender canParticipateGender;
 
 
 		public static MeetingCreateQuery toQuery(MeetingCreateReq request, UUID userUuid) {
 			return MeetingCreateQuery.builder()
-				.title(request.getTitle())
+				.meetingTitle(request.getMeetingTitle())
 				.hostUserUuid(userUuid)
-				.meetingAddress(request.getMeetingAddress())
-				.description(request.getDescription())
-				.entryFee(request.getEntryFee())
+				.meetingPlaceAddress(request.getMeetingPlaceAddress())
+				.meetingDescription(request.getMeetingDescription())
+				.meetingEntryFee(request.getMeetingEntryFee())
 				.meetingDatetime(request.getMeetingDatetime())
-				.refundPolicy(request.getRefundPolicy())
-				.isFcfs(request.getIsFcfs())
-				.isOnline(request.getIsOnline())
-				.maxParticipantNum(request.getMaxParticipantNum())
-				.maxAge(request.getMaxAge())
-				.minAge(request.getMinAge())
-				.companyList(request.getCompanyList())
-				.entryFeeInfoIdList(request.getEntryFeeInfoIdList())
-				.entryFeeInfoEtcString(request.getEntryFeeInfoEtcString())
-				.themeCategoryId(request.getThemeCategoryId())
-				.question(request.getQuestion())
-				.headerImageUrl(request.getHeaderImageUrl())
-				.joinGender(request.getJoinGender())
+				.firstComeFirstServed(request.getFirstComeFirstServed())
+				.onlineStatus(request.getOnlineStatus())
+				.maxParticipantsCount(request.getMaxParticipantsCount())
+				.maxAgeLimit(request.getMaxAgeLimit())
+				.minAgeLimit(request.getMinAgeLimit())
+				.canParticipateCompanyList(request.getCanParticipateCompanyList())
+				.entryFeeInfomationIdList(request.getEntryFeeInfomationIdList())
+				.entryFeeInfomationEtcString(request.getEntryFeeInfomationEtcString())
+				.meetingParticipationQuestion(request.getMeetingParticipationQuestion())
+				.meetingHeaderImageUrl(request.getMeetingHeaderImageUrl())
+				.canParticipateGender(request.getCanParticipateGender())
 				.build();
 		}
 

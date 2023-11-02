@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum JoinGender implements BaseEnum<Character, String> {
+public enum CanParticipateGender implements BaseEnum<Character, String> {
 	BOTH('B', "둘다"),
 	MAN('M', "남자"),
 	WOMAN('W', "여자");

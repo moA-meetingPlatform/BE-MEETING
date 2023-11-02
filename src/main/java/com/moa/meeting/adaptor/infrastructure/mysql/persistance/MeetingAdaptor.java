@@ -19,26 +19,24 @@ public class MeetingAdaptor implements MeetingPort {
 	@Override
 	public Meeting createMeeting(Meeting meeting) {
 		MeetingEntity meetingEntity = meetingRepository.save(MeetingEntity.createMeeting(
-			meeting.getTitle(),
+			meeting.getMeetingTitle(),
 			meeting.getHostUserUuid(),
-			meeting.getMeetingAddress(),
-			meeting.getDescription(),
-			meeting.getEntryFee(),
+			meeting.getMeetingPlaceAddress(),
+			meeting.getMeetingDescription(),
+			meeting.getMeetingEntryFee(),
 			meeting.getMeetingDatetime(),
-			meeting.getRefundPolicy(),
-			meeting.getIsFcfs(),
-			meeting.getIsOnline(),
-			meeting.getMaxParticipantNum(),
-			meeting.getMaxAge(),
-			meeting.getMinAge(),
-			meeting.getCompanyList(),
-			meeting.getEntryFeeInfoIdList(),
-			meeting.getEntryFeeInfoEtcString(),
-			meeting.getThemeCategoryId(),
-			meeting.getQuestion(),
-			meeting.getHeaderImageUrl(),
+			meeting.getFirstComeFirstServed(),
+			meeting.getOnlineStatus(),
+			meeting.getMaxParticipantsCount(),
+			meeting.getMaxAgeLimit(),
+			meeting.getMinAgeLimit(),
+			meeting.getCanParticipateCompanyList(),
+			meeting.getEntryFeeInfomationIdList(),
+			meeting.getEntryFeeInfomationEtcString(),
+			meeting.getMeetingParticipationQuestion(),
+			meeting.getMeetingHeaderImageUrl(),
 			meeting.getMeetingStatus(),
-			meeting.getJoinGender()
+			meeting.getCanParticipateGender()
 		));
 		return meetingEntity.toDomain();
 	}

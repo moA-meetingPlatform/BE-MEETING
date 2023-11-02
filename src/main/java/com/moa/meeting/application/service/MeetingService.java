@@ -21,25 +21,23 @@ public class MeetingService implements MeetingUseCase {
 	@Override
 	public MeetingGetDto createMeeting(MeetingCreateQuery meetingCreateQuery) {
 		Meeting meeting = meetingPort.createMeeting(Meeting.saveMeeting(
-			meetingCreateQuery.getTitle(),
+			meetingCreateQuery.getMeetingTitle(),
 			meetingCreateQuery.getHostUserUuid(),
-			meetingCreateQuery.getMeetingAddress(),
-			meetingCreateQuery.getDescription(),
-			meetingCreateQuery.getEntryFee(),
+			meetingCreateQuery.getMeetingPlaceAddress(),
+			meetingCreateQuery.getMeetingDescription(),
+			meetingCreateQuery.getMeetingEntryFee(),
 			meetingCreateQuery.getMeetingDatetime(),
-			meetingCreateQuery.getRefundPolicy(),
-			meetingCreateQuery.getIsFcfs(),
-			meetingCreateQuery.getIsOnline(),
-			meetingCreateQuery.getMaxParticipantNum(),
-			meetingCreateQuery.getMaxAge(),
-			meetingCreateQuery.getMinAge(),
-			meetingCreateQuery.getCompanyList(),
-			meetingCreateQuery.getEntryFeeInfoIdList(),
-			meetingCreateQuery.getEntryFeeInfoEtcString(),
-			meetingCreateQuery.getThemeCategoryId(),
-			meetingCreateQuery.getQuestion(),
-			meetingCreateQuery.getHeaderImageUrl(),
-			meetingCreateQuery.getJoinGender()
+			meetingCreateQuery.getFirstComeFirstServed(),
+			meetingCreateQuery.getOnlineStatus(),
+			meetingCreateQuery.getMaxParticipantsCount(),
+			meetingCreateQuery.getMaxAgeLimit(),
+			meetingCreateQuery.getMinAgeLimit(),
+			meetingCreateQuery.getCanParticipateCompanyList(),
+			meetingCreateQuery.getEntryFeeInfomationIdList(),
+			meetingCreateQuery.getEntryFeeInfomationEtcString(),
+			meetingCreateQuery.getMeetingParticipationQuestion(),
+			meetingCreateQuery.getMeetingHeaderImageUrl(),
+			meetingCreateQuery.getCanParticipateGender()
 		));
 		return modelMapperBean.modelMapper().map(meeting, MeetingGetDto.class);
 	}
