@@ -27,55 +27,55 @@ public class Meeting extends BaseDateTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "meeting_title", length = 40)
+	@Column(name = "meeting_title", length = 150)
 	private String meetingTitle;
 
 	@Column(name = "host_user_uuid")
 	private UUID hostUserUuid;
 
-	@Column(name = "meeting_address", length = 255)
+	@Column(name = "meeting_place_address", length = 255)
 	private String meetingPlaceAddress;
 
 	@Column(name = "meeting_description", columnDefinition = "TEXT")
 	private String meetingDescription;
 
-	@Column(name = "entry_fee")
+	@Column(name = "meeting_entry_fee")
 	private Integer meetingEntryFee;   // 입장료
 
 	@Column(name = "meeting_datetime")
 	private LocalDateTime meetingDatetime;
 
-	@Column(name = "is_fcfs")
+	@Column(name = "first_come_first_served")
 	private Boolean firstComeFirstServed; // 선착순 여부
 
-	@Column(name = "is_online")
+	@Column(name = "online_status")
 	private Boolean onlineStatus;   // 온라인 여부
 
-	@Column(name = "max_participant_num")
+	@Column(name = "max_participants_count")
 	private Integer maxParticipantsCount;  // 최대 참가자 수
 
-	@Column(name = "curr_participant_num")
+	@Column(name = "current_participants_count")
 	private Integer currentParticipantsCount; // 현재 참가자 수
 
-	@Column(name = "max_age")
+	@Column(name = "max_age_limit")
 	private Integer maxAgeLimit;
 
-	@Column(name = "min_age")
+	@Column(name = "min_age_limit")
 	private Integer minAgeLimit;
 
 	@Column(name = "can_participate_company_list", length = 255)
 	private String canParticipateCompanyList; // 선택가능 회사그룹 id 리스트, 구분자 : ','
 
-	@Column(name = "entry_fee_info_id_list", length = 50)
-	private String entryFeeInfomationIdList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
+	@Column(name = "entry_fee_information_list", length = 50)
+	private String entryFeeInfomationList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
 
-	@Column(name = "entry_fee_info_etc_string", length = 50)
+	@Column(name = "entry_fee_information_etc_string", length = 50)
 	private String entryFeeInfomationEtcString;   // 참가비 정보 기타 항목 string
 
 	@Column(name = "meeting_participation_question", length = 40)
 	private String meetingParticipationQuestion;
 
-	@Column(name = "header_image_url", length = 255)
+	@Column(name = "meeting_header_image_url", length = 255)
 	private String meetingHeaderImageUrl;
 
 	@Convert(converter = BaseEnumConverter.MeetingStatusConverter.class)
@@ -83,7 +83,7 @@ public class Meeting extends BaseDateTime {
 	private MeetingStatus meetingStatus;
 
 	@Convert(converter = BaseEnumConverter.CanParticipateGenderConverter.class)
-	@Column(name = "join_gender", length = 1)
+	@Column(name = "can_participate_gender", length = 1)
 	private CanParticipateGender canParticipateGender;
 
 }

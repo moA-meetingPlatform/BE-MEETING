@@ -5,8 +5,8 @@ import com.moa.global.vo.ApiResult;
 import com.moa.meeting.application.MeetingService;
 import com.moa.meeting.dto.MeetingCreateDto;
 import com.moa.meeting.dto.MeetingGetDto;
-import com.moa.meeting.dto.MeetingSimpleGetDto;
 import com.moa.meeting.vo.request.MeetingCreateRequest;
+import com.moa.meeting.vo.request.MeetingSimpleRequest;
 import com.moa.meeting.vo.response.MeetingCreateResponse;
 import com.moa.meeting.vo.response.MeetingSimpleResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -49,13 +50,10 @@ public class MeetingController {
 		return ResponseEntity.ok(ApiResult.ofSuccess(response));
 	}
 
-
 	@Operation(summary = "모임 간단 조회", description = "모임 조회")
-	@GetMapping("/{meetingId}/simple")
-	public ResponseEntity<ApiResult<MeetingSimpleResponse>> getMeetingSimple(@PathVariable("meetingId") Long meetingId) {
-		MeetingSimpleGetDto meetingSimpleGetDto = meetingService.getMeetingSimple(meetingId);
-		MeetingSimpleResponse response = modelMapper.map(meetingSimpleGetDto, MeetingSimpleResponse.class);
-		return ResponseEntity.ok(ApiResult.ofSuccess(response));
+	@PostMapping("/list")
+	public ResponseEntity<List<MeetingSimpleResponse>> getMeetings(@RequestBody MeetingSimpleRequest request) {
+		List<MeetingSimpleResponse> meetings = meetingService.getMeetingsByIds(request.getIds());
+		return ResponseEntity.ok(meetings); // 직접 리스트를 ResponseEntity 안에 포함시켜 반환
 	}
-
 }
