@@ -29,14 +29,13 @@ public class MeetingSimpleGetDto {
 	private Boolean onlineStatus;
 	private Integer maxParticipantsCount;
 	private Integer currentParticipantsCount;
-
 	private String meetingHeaderImageUrl;
 	private MeetingStatus meetingStatus;
 
 
 	public static MeetingSimpleGetDto fromEntity(Meeting meeting) {
 		String canParticipateCompanyListStr = meeting.getCanParticipateCompanyList();
-		String entryFeeInfomationIdListStr = meeting.getEntryFeeInfomationIdList();
+		String entryFeeInfomationIdListStr = meeting.getEntryFeeInfomationList();
 		List<Integer> convertCanParticipateCompanyList = null;
 		List<Integer> convertEntryFeeInfomationIdList = Collections.emptyList();
 

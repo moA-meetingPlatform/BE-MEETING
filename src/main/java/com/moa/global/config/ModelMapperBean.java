@@ -1,4 +1,4 @@
-package com.moa.global;
+package com.moa.global.config;
 
 
 import org.modelmapper.ModelMapper;

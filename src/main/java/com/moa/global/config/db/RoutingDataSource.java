@@ -1,4 +1,4 @@
-package com.moa.global.config;
+package com.moa.global.config.db;
 
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.moa.meeting.presentation;
+package com.moa.global;
 
 
 import com.moa.global.vo.ApiResult;

@@ -45,7 +45,7 @@ public class MeetingGetDto {
 
 	public static MeetingGetDto fromEntity(Meeting meeting) {
 		String canParticipateCompanyListStr = meeting.getCanParticipateCompanyList();
-		String entryFeeInfomationIdListStr = meeting.getEntryFeeInfomationIdList();
+		String entryFeeInfomationIdListStr = meeting.getEntryFeeInfomationList();
 		List<Integer> convertCanParticipateCompanyList = null;
 		List<Integer> convertEntryFeeInfomationIdList = Collections.emptyList();
 
