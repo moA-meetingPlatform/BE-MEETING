@@ -1,4 +1,4 @@
-package com.moa.meeting.infrastructure.mysql;
+package com.moa.meeting.infrastructure;
 
 
 import com.moa.meeting.domain.Meeting;

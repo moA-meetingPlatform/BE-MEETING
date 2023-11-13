@@ -2,6 +2,8 @@ package com.moa.meeting.dto;
 
 
 import com.moa.meeting.domain.enums.CanParticipateGender;
+import com.moa.meeting.domain.enums.CompanyCategory;
+import com.moa.meeting.domain.enums.EntryFeeInformation;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -27,8 +29,8 @@ public class MeetingCreateDto {
 	private Integer maxParticipantsCount;
 	private Integer maxAgeLimit;
 	private Integer minAgeLimit;
-	private List<Integer> canParticipateCompanyList;
-	private List<Integer> entryFeeInfomationIdList;
+	private List<CompanyCategory> canParticipateCompanyList;
+	private List<EntryFeeInformation> entryFeeInformationList;
 	private String entryFeeInfomationEtcString;
 	private String meetingParticipationQuestion;
 	private String meetingHeaderImageUrl;

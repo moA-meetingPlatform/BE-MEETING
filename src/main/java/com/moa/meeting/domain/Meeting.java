@@ -2,9 +2,10 @@ package com.moa.meeting.domain;
 
 
 import com.moa.global.domain.BaseDateTime;
-import com.moa.meeting.domain.enums.CanParticipateGender;
+import com.moa.meeting.domain.converter.EntryFeeInformationConverter;
+import com.moa.meeting.domain.converter.MeetingStatusConverter;
+import com.moa.meeting.domain.enums.EntryFeeInformation;
 import com.moa.meeting.domain.enums.MeetingStatus;
-import com.moa.meeting.infrastructure.converter.BaseEnumConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -57,17 +59,20 @@ public class Meeting extends BaseDateTime {
 	@Column(name = "current_participants_count")
 	private Integer currentParticipantsCount; // 현재 참가자 수
 
-	@Column(name = "max_age_limit")
-	private Integer maxAgeLimit;
+//	@Column(name = "max_age_limit")
+//	private Integer maxAgeLimit;
+//
+//	@Column(name = "min_age_limit")
+//	private Integer minAgeLimit;
 
-	@Column(name = "min_age_limit")
-	private Integer minAgeLimit;
+//	@Convert(converter = CompanyCategoryConverter.class)
+//	@Column(name = "can_participate_company_list", length = 10)
+//	private List<CompanyCategory> canParticipateCompanyList; // 선택가능 회사그룹 id 리스트, 구분자 : ','
 
-	@Column(name = "can_participate_company_list", length = 255)
-	private String canParticipateCompanyList; // 선택가능 회사그룹 id 리스트, 구분자 : ','
-
-	@Column(name = "entry_fee_information_list", length = 50)
-	private String entryFeeInfomationList;   // 참가비 정보 항목 id 리스트, 구분자 : ','
+	// ex) C,H,N,S,M,R,P
+	@Convert(converter = EntryFeeInformationConverter.class)
+	@Column(name = "entry_fee_information_list", length = 20)
+	private List<EntryFeeInformation> entryFeeInformationList;  // 참가비 정보 항목 리스트, 구분자 : ','
 
 	@Column(name = "entry_fee_information_etc_string", length = 50)
 	private String entryFeeInfomationEtcString;   // 참가비 정보 기타 항목 string
@@ -78,12 +83,12 @@ public class Meeting extends BaseDateTime {
 	@Column(name = "meeting_header_image_url", length = 255)
 	private String meetingHeaderImageUrl;
 
-	@Convert(converter = BaseEnumConverter.MeetingStatusConverter.class)
+	@Convert(converter = MeetingStatusConverter.class)
 	@Column(name = "meeting_status", length = 2)
 	private MeetingStatus meetingStatus;
 
-	@Convert(converter = BaseEnumConverter.CanParticipateGenderConverter.class)
-	@Column(name = "can_participate_gender", length = 1)
-	private CanParticipateGender canParticipateGender;
+	//@Convert(converter = CanParticipateGenderConverter.class)
+	//@Column(name = "can_participate_gender", length = 1)
+	//private CanParticipateGender canParticipateGender;
 
 }

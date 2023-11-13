@@ -2,6 +2,7 @@ package com.moa.meeting.vo.request;
 
 
 import com.moa.meeting.domain.enums.CanParticipateGender;
+import com.moa.meeting.domain.enums.EntryFeeInformation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.ToString;
@@ -52,8 +53,8 @@ public class MeetingCreateRequest {
 	@Schema(description = "참가 가능한 회사 그룹 리스트", nullable = true, example = "[2, 3]")
 	private List<Integer> canParticipateCompanyList;
 
-	@Schema(description = "참가비 정보 항목 id 리스트 (모임 비용이 있을 경우 설정될 수 있음)", nullable = true, example = "[1, 3]")
-	private List<Integer> entryFeeInfomationIdList;
+	@Schema(description = "참가비 정보 항목 리스트 (모임 비용이 있을 경우 설정될 수 있음)", nullable = true, example = "[1, 3]")
+	private List<EntryFeeInformation> entryFeeInformationList;
 
 	@Schema(description = "참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)", nullable = true, example = "장식 구매 비용")
 	private String entryFeeInfomationEtcString;

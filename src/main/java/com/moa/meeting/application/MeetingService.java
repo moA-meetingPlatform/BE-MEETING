@@ -12,7 +12,7 @@ import java.util.List;
 public interface MeetingService {
 
 	MeetingGetDto createMeeting(MeetingCreateDto meetingCreateDto);
-	MeetingSimpleGetDto getMeetingSimple(Long id);
+//	MeetingSimpleGetDto getMeetingSimple(Long id);
 
 	List<MeetingSimpleResponse> getMeetingsByIds(List<Long> ids);
 }
