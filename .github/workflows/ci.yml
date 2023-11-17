@@ -12,10 +12,9 @@ permissions:
   contents: write
 
 env:
-  IMAGE_TAG: dev-13
+  IMAGE_TAG: dev-14
 
 jobs:
-
   docker_build_and_push:
     runs-on: ubuntu-latest
     steps:
@@ -41,8 +40,7 @@ jobs:
           push: true
           tags: awdfaf/be-meeting:${{ env.IMAGE_TAG }}
           platforms: linux/amd64
-          build-args: 
-            COLOR=${{ env.IMAGE_TAG }}
+          build-args: COLOR=${{ env.IMAGE_TAG }}
 
   deploy:
     needs: docker_build_and_push
