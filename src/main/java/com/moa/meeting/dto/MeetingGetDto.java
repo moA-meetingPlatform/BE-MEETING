@@ -1,17 +1,12 @@
 package com.moa.meeting.dto;
 
 
-import com.moa.meeting.domain.Meeting;
 import com.moa.meeting.domain.enums.CanParticipateGender;
-import com.moa.meeting.domain.enums.MeetingStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 
 @Builder
@@ -20,70 +15,25 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MeetingGetDto {
-
-	private Long id;
-	private String meetingTitle;
-	private UUID hostUserUuid;
-	private String meetingPlaceAddress;
-	private String meetingDescription;
-	private Integer meetingEntryFee;
-	private LocalDateTime meetingDatetime;
-	private Boolean firstComeFirstServed;
-	private Boolean onlineStatus;
-	private Integer maxParticipantsCount;
-	private Integer currentParticipantsCount;
-	private Integer maxAgeLimit;
-	private Integer minAgeLimit;
-	private List<Integer> canParticipateCompanyList;
-	private List<Integer> entryFeeInfomationIdList;
-	private String entryFeeInfomationEtcString;
-	private String meetingParticipationQuestion;
-	private String meetingHeaderImageUrl;
-	private MeetingStatus meetingStatus;
-	private CanParticipateGender canParticipateGender;
-
-
-	public static MeetingGetDto fromEntity(Meeting meeting) {
-		String canParticipateCompanyListStr = meeting.getCanParticipateCompanyList();
-		String entryFeeInfomationIdListStr = meeting.getEntryFeeInfomationList();
-		List<Integer> convertCanParticipateCompanyList = null;
-		List<Integer> convertEntryFeeInfomationIdList = Collections.emptyList();
-
-		if (canParticipateCompanyListStr != null) {
-			String[] canParticipateCompanyListStrArr = canParticipateCompanyListStr.split(",");
-			convertCanParticipateCompanyList = Arrays.stream(canParticipateCompanyListStrArr)    // stream of String
-				.map(Integer::valueOf) // stream of Integer
-				.collect(Collectors.toList());
-		}
-
-		if (entryFeeInfomationIdListStr != null) {
-			String[] entryFeeInfomationIdListStrArr = entryFeeInfomationIdListStr.split(",");
-			convertEntryFeeInfomationIdList = Arrays.stream(entryFeeInfomationIdListStrArr)    // stream of String
-				.map(Integer::valueOf) // stream of Integer
-				.collect(Collectors.toList());
-		}
-		return MeetingGetDto.builder()
-			.id(meeting.getId())
-			.meetingTitle(meeting.getMeetingTitle())
-			.hostUserUuid(meeting.getHostUserUuid())
-			.meetingPlaceAddress(meeting.getMeetingPlaceAddress())
-			.meetingDescription(meeting.getMeetingDescription())
-			.meetingEntryFee(meeting.getMeetingEntryFee())
-			.meetingDatetime(meeting.getMeetingDatetime())
-			.firstComeFirstServed(meeting.getFirstComeFirstServed())
-			.onlineStatus(meeting.getOnlineStatus())
-			.maxParticipantsCount(meeting.getMaxParticipantsCount())
-			.currentParticipantsCount(meeting.getCurrentParticipantsCount())
-			.maxAgeLimit(meeting.getMaxAgeLimit())
-			.minAgeLimit(meeting.getMinAgeLimit())
-			.canParticipateCompanyList(convertCanParticipateCompanyList)
-			.entryFeeInfomationIdList(convertEntryFeeInfomationIdList)
-			.entryFeeInfomationEtcString(meeting.getEntryFeeInfomationEtcString())
-			.meetingParticipationQuestion(meeting.getMeetingParticipationQuestion())
-			.meetingHeaderImageUrl(meeting.getMeetingHeaderImageUrl())
-			.meetingStatus(meeting.getMeetingStatus())
-			.canParticipateGender(meeting.getCanParticipateGender())
-			.build();
-	}
+	private Long id;	//모임 id
+	private String meetingTitle;	//모임 제목
+	private UUID hostUserUuid;	//호스트 uuid
+	private String hostNickname;	//호스트 닉네임
+	private String placeAddress;	//모임 장소 주소
+	private String description;	//모임 설명
+	private Integer entryFee;	//참가비
+	private LocalDateTime meetingDatetime;	//모임 날짜
+	private Boolean firstComeFirstServed;	//선착순 여부
+	private Boolean onlineStatus;	//온라인 여부
+	private Integer maxParticipants;	//최대 참가자 수
+	private Integer currentParticipants;	//현재 참가자 수
+	private Integer maxAge;	//최대 나이
+	private Integer minAge;	//최소 나이
+	private List<String> canParticipateCompanies;	//참여가능한 기업 리스트
+	private List<String> entryFeeInformations;	//참가비 정보
+	private String entryFeeInfomationEtcString;	//참가비 정보 기타
+	private String participationQuestion;	//참가 신청 시 질문
+	private String headerImageUrl;	//모임 헤더 이미지
+	private CanParticipateGender participateGender;	//참여가능한 성별
 
 }
