@@ -37,10 +37,10 @@ public class MeetingCreateRequest {
 	@Schema(description = "모임 시작 시간", nullable = false, example = "2021-10-31T19:30:00")
 	private LocalDateTime meetingDatetime;
 
-	@Schema(description = "선착순 여부", nullable = false, example = "true")	// 선착순 : true, 승인제 : false
+	@Schema(description = "선착순 여부", nullable = false, example = "true")    // 선착순 : true, 승인제 : false
 	private Boolean firstComeFirstServed;
 
-	@Schema(description = "온라인 여부", nullable = false, example = "false")	// 오프라인 : false, 온라인 : true
+	@Schema(description = "온라인 여부", nullable = false, example = "false")    // 오프라인 : false, 온라인 : true
 	private Boolean onlineStatus;
 
 	@Schema(description = "참가 인원수", nullable = false, example = "10")
@@ -53,11 +53,11 @@ public class MeetingCreateRequest {
 	private Integer minAge;
 
 	@Schema(description = "참가 가능한 회사 그룹 리스트", nullable = true, example = "[MAJOR_COMPANY,MEDIUM_COMPANY]",
-			allowableValues = {"MAJOR_COMPANY", "MAJOR_COMPANY_SUBSIDIARY", "MEDIUM_COMPANY", "PUBLIC_CORPORATION", "PUBLIC_INSTITUTION", "FOREIGN_COMPANY", "VENTURE_COMPANY", "SMALL_COMPANY"})
+		allowableValues = { "MAJOR_COMPANY", "MAJOR_COMPANY_SUBSIDIARY", "MEDIUM_COMPANY", "PUBLIC_CORPORATION", "PUBLIC_INSTITUTION", "FOREIGN_COMPANY", "VENTURE_COMPANY", "SMALL_COMPANY" })
 	private List<String> participateCompanies;
 
 	@Schema(description = "참가비 정보 항목 리스트 (모임 비용이 있을 경우 설정될 수 있음)", nullable = true, example = "[CONTENTS, NO_SHOW]",
-			allowableValues = {"CONTENTS", "HOST", "NO_SHOW", "SPACE", "MATERIAL", "REFRESHMENT", "PLATFORM"})
+		allowableValues = { "CONTENTS", "HOST", "NO_SHOW", "SPACE", "MATERIAL", "REFRESHMENT", "PLATFORM" })
 	private List<String> entryFeeInformations;
 
 	@Schema(description = "참가비 정보 기타 항목 string (모임 비용이 있을 경우 설정될 수 있음)", nullable = true, example = "장식 구매 비용")
@@ -71,5 +71,8 @@ public class MeetingCreateRequest {
 
 	@Schema(description = "참가 가능한 성별", nullable = false, example = "BOTH", allowableValues = { "BOTH", "MAN", "WOMAN" })
 	private CanParticipateGender participateGender;
+
+	@Schema(description = "모임 카테고리 id", nullable = false, example = "12")
+	private Integer themeCategoryId;
 
 }

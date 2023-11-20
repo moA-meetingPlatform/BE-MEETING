@@ -25,8 +25,6 @@ public class KafkaTestController {
 	@GetMapping("/kafka-test")
 	public void test() throws JsonProcessingException {
 		CategoryMeetingCreateDto dto = CategoryMeetingCreateDto.builder()
-			.categoryMeetingId(1L)
-			.enable(true)
 			.maxAge(30)
 			.minAge(22)
 			.participateGender(CanParticipateGender.BOTH)
@@ -34,8 +32,6 @@ public class KafkaTestController {
 
 		log.info("dto : {}", objectMapper.writeValueAsString(dto));
 		meetingCreateProducer.sendCreateMeetingEvent(CategoryMeetingCreateDto.builder()
-			.categoryMeetingId(1L)
-			.enable(true)
 			.maxAge(30)
 			.minAge(22)
 			.participateGender(CanParticipateGender.BOTH)
