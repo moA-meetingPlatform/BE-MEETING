@@ -36,7 +36,7 @@ public class Meeting extends BaseDateTime {
 	@Column(name = "place_address", length = 255)	//모임 장소 주소
 	private String placeAddress;
 
-	@Column(name = "description", length = 7000)	//모임 설명
+	@Column(name = "description", length = 10000)	//모임 설명
 	private String description;
 
 	@Column(name = "entry_fee")
