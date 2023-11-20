@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moa.global.config.exception.CustomException;
 import com.moa.global.config.exception.ErrorCode;
-import com.moa.meeting.dto.CategoryMeetingGetDto;
+import com.moa.meeting.dto.CategoryMeetingCreateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -25,7 +25,7 @@ public class MeetingCreateProducer {
 	private String meetingCreateTopic = "meeting-create";
 
 
-	public void sendCreateMeetingEvent(CategoryMeetingGetDto dto) {
+	public void sendCreateMeetingEvent(CategoryMeetingCreateDto dto) {
 		log.debug(String.format("Produce dto : %s", dto));
 		try {
 			String message = objectMapper.writeValueAsString(dto);
