@@ -72,7 +72,7 @@ public class MeetingCreateRequest {
 	@Schema(description = "참가 가능한 성별", nullable = false, example = "BOTH", allowableValues = { "BOTH", "MAN", "WOMAN" })
 	private CanParticipateGender participateGender;
 
-	@Schema(name = "theme_category_id")
+	@Schema(description = "모임 카테고리 id", nullable = false, example = "12")
 	private Integer themeCategoryId;
 
 }

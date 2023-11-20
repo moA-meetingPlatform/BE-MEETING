@@ -12,6 +12,7 @@ import com.moa.meeting.infrastructure.kafka.producer.MeetingCreateProducer;
 import com.moa.meeting.vo.response.MeetingSimpleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MeetingServiceImpl implements MeetingService {
@@ -62,9 +64,8 @@ public class MeetingServiceImpl implements MeetingService {
 			.build();
 		meeting = meetingRepository.save(meeting);
 
-		String participateCompaniesStr = meetingCreateDto.getParticipateCompanies().stream()
-			.map(Object::toString)
-			.collect(Collectors.joining(", "));
+		// 참여가능한 기업 리스트를 문자열로 변환
+		String participateCompaniesStr = String.join(", ", meetingCreateDto.getParticipateCompanies());
 
 		// 모임 생성 후 Kafka로 모임 생성 이벤트 전송
 		// 모임 생성 이벤트를 받은 카테고리 서비스에서는 모임 카테고리 정보 저장
