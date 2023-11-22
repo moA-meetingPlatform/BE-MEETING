@@ -43,7 +43,7 @@ public class ParticipateStatusUpdateEventConsumer {
 			.meetingId(((Number) map.get("meetingId")).longValue())
 			.prevApplicationStatus(ApplicationStatus.valueOf(String.valueOf(map.get("prevApplicationStatus"))))
 			.currentApplicationStatus(ApplicationStatus.valueOf(String.valueOf(map.get("currentApplicationStatus"))))
-			.updateByHost(Boolean.getBoolean((String) map.get("updateByHost")))
+			.updateByHost((Boolean) map.get("updateByHost"))
 			.build();
 
 		log.debug("dto : {}", dto.toString());
