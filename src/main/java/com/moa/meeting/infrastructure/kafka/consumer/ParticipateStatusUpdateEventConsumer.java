@@ -38,8 +38,8 @@ public class ParticipateStatusUpdateEventConsumer {
 		log.debug("여까진 됨");
 
 		ParticipantApplicationUpdateEventDto dto = ParticipantApplicationUpdateEventDto.builder()
-			.id(Long.parseLong((String) map.get("id")))
-			.meetingId(Integer.parseInt((String) map.get("meetingId")))
+			.id(((Number) map.get("id")).longValue())
+			.meetingId(((Number) map.get("meetingId")).longValue())
 			.prevApplicationStatus(ApplicationStatus.valueOf(String.valueOf(map.get("prevApplicationStatus"))))
 			.currentApplicationStatus(ApplicationStatus.valueOf(String.valueOf(map.get("currentApplicationStatus"))))
 			.updateByHost(Boolean.getBoolean((String) map.get("updateByHost")))
