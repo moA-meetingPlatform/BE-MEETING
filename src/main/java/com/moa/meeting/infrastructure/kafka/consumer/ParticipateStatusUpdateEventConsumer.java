@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moa.global.config.exception.CustomException;
 import com.moa.global.config.exception.ErrorCode;
+import com.moa.meeting.application.KafkaMeetingService;
 import com.moa.meeting.domain.enums.ApplicationStatus;
 import com.moa.meeting.dto.kafka.ParticipantApplicationUpdateEventDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.Map;
 public class ParticipateStatusUpdateEventConsumer {
 
 	private final ObjectMapper objectMapper;
+	private final KafkaMeetingService kafkaMeetingService;
 
 
 	@KafkaListener(topics = "participate-update", groupId = "participate-update")
@@ -35,7 +37,6 @@ public class ParticipateStatusUpdateEventConsumer {
 			log.error("JsonProcessingException : {}", e.getMessage() + "\n" + message);
 			throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
-		log.debug("여까진 됨");
 
 		ParticipantApplicationUpdateEventDto dto = ParticipantApplicationUpdateEventDto.builder()
 			.id(((Number) map.get("id")).longValue())
@@ -47,6 +48,7 @@ public class ParticipateStatusUpdateEventConsumer {
 
 		log.debug("dto : {}", dto.toString());
 
+		kafkaMeetingService.updateMeetingByParticipantApplicationUpdateEvent(dto);
 	}
 
 }
