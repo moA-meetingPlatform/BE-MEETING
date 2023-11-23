@@ -26,4 +26,12 @@ public class ViewCount extends BaseDateTime{
 
     @Column(name = "last_viewed_time")
     private LocalDateTime lastViewedTime;
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public void setLastViewedTime(LocalDateTime lastViewedTime) {
+        this.lastViewedTime = lastViewedTime;
+    }
 }

@@ -2,11 +2,13 @@ package com.moa.meeting.application;
 
 
 import com.moa.meeting.domain.Meeting;
+import com.moa.meeting.domain.ViewCount;
 import com.moa.meeting.domain.enums.EntryFeeInformation;
 import com.moa.meeting.dto.MeetingCreateDto;
 import com.moa.meeting.dto.MeetingDetailGetDto;
 import com.moa.meeting.dto.MeetingGetDto;
 import com.moa.meeting.infrastructure.MeetingRepository;
+import com.moa.meeting.infrastructure.ViewCountRepository;
 import com.moa.meeting.vo.response.MeetingSimpleResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class MeetingServiceImpl implements MeetingService {
 
 	private final MeetingRepository meetingRepository;
 	private final ModelMapper modelMapper;
+	private final ViewCountRepository viewCountRepository;
 
 	@Operation(summary = "모임 생성", description = "모임 생성")
 	@Transactional(readOnly = false)
@@ -134,15 +137,40 @@ public class MeetingServiceImpl implements MeetingService {
 		return builder.build();
 	}
 
+	//모임 조회수
+	/*
+	todo : 조회시, 모집중, 모집종료 된 모임들에 한해서 조회수가 높은것,
+			그리고 그 중에서 마지막 조회시간이 최신순인걸로 찾아야함
+	 */
+
+	@Override public void increaseViewCount(Long meetingId) {
+		ViewCount viewCount = viewCountRepository.findByMeetingId(meetingId);
+
+		if (viewCount == null) {
+			// 해당 모임에 대한 조회수 정보가 없는 경우, 새로운 레코드 생성
+			viewCount = ViewCount.builder()
+					.meetingId(meetingId)
+					.viewCount(1) // 처음 조회일 경우 1로 설정
+					.lastViewedTime(LocalDateTime.now())
+					.build();
+		} else {
+			// 이미 조회수 정보가 있는 경우, 조회수 증가 및 최근 조회 시간 업데이트
+			viewCount.setViewCount(viewCount.getViewCount() + 1);
+			viewCount.setLastViewedTime(LocalDateTime.now());
+		}
+
+		viewCountRepository.save(viewCount);
+	}
+
 	private List<String> convertCodesToTitles(String entryFeeInformations) {	// 참가비 정보 코드를 참가비 정보 제목으로 변환
 		return Arrays.stream(entryFeeInformations.split(","))	// 쉼표로 구분하여 리스트로 변환
-				.map(String::trim)
+				.map(String::trim)	// 공백 제거
 				.map(code -> {
 					// Enum의 code를 사용하여 해당 Enum 찾기
-					return Arrays.stream(EntryFeeInformation.values())
-							.filter(e -> e.getCode().toString().equals(code))
-							.findFirst()
-							.map(EntryFeeInformation::getTitle)
+					return Arrays.stream(EntryFeeInformation.values())	// EntryFeeInformation Enum의 모든 값
+							.filter(e -> e.getCode().toString().equals(code))	// code가 일치하는 값 필터링
+							.findFirst()	// 첫 번째 값 반환
+							.map(EntryFeeInformation::getTitle)	// title 반환
 							.orElse("Unknown"); // 존재하지 않는 코드에 대한 처리
 				})
 				.collect(Collectors.toList());

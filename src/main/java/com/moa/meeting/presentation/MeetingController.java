@@ -71,8 +71,11 @@ public class MeetingController {
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResult<MeetingDetailResponse>> getMeeting(@PathVariable Long id) {
-		MeetingDetailGetDto meetingDetailGetDto = meetingService.getMeeting(id);	// 모임 조회
-		MeetingDetailResponse response = modelMapper.map(meetingDetailGetDto, MeetingDetailResponse.class);	// 모임 상세 조회 후 반환
+		// 조회수 증가 처리
+		meetingService.increaseViewCount(id);
+
+		MeetingDetailGetDto meetingDetailGetDto = meetingService.getMeeting(id); // 모임 조회
+		MeetingDetailResponse response = modelMapper.map(meetingDetailGetDto, MeetingDetailResponse.class); // 모임 상세 조회 후 반환
 		return ResponseEntity.ok(ApiResult.ofSuccess(response));
 	}
 

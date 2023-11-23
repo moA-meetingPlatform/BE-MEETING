@@ -16,4 +16,6 @@ public interface MeetingService {
 	List<MeetingSimpleResponse> getMeetingsByIds(List<Long> ids);	// 모임 간단 조회
 
 	MeetingDetailGetDto getMeeting(Long id);	// 모임 상세 조회
+
+	void increaseViewCount(Long id);
 }
