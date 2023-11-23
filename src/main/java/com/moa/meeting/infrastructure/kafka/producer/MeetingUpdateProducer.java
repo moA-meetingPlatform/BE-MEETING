@@ -24,7 +24,7 @@ public class MeetingUpdateProducer {
 
 
 	public void send(long id) {
-		log.debug(String.format("Produce dto : %s", id));
+		log.debug(String.format("Produce data : %s", id));
 		try {
 			String message = objectMapper.writeValueAsString(id);
 			kafkaTemplate.send(TOPIC, message);
