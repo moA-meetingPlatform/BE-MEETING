@@ -1,6 +1,7 @@
 package com.moa.meeting.application;
 
 
+import com.moa.global.vo.ApiResult;
 import com.moa.meeting.dto.MeetingCreateDto;
 import com.moa.meeting.dto.MeetingDetailGetDto;
 import com.moa.meeting.dto.MeetingGetDto;
@@ -18,4 +19,12 @@ public interface MeetingService {
 	MeetingDetailGetDto getMeeting(Long id);	// 모임 상세 조회
 
 	void increaseViewCount(Long id);
+
+    ApiResult<List<MeetingSimpleResponse>> getPopularMeetings(List<Long> ids);
+
+	ApiResult<List<MeetingSimpleResponse>> getSoaringMeetings(List<Long> ids);
+
+	ApiResult<List<MeetingSimpleResponse>> getNewMeetings(List<Long> ids);
+
+	ApiResult<List<MeetingSimpleResponse>> getSuggestedMeetings(List<Long> ids);
 }

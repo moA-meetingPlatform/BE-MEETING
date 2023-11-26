@@ -1,6 +1,7 @@
 package com.moa.meeting.application;
 
 
+import com.moa.global.vo.ApiResult;
 import com.moa.meeting.domain.Meeting;
 import com.moa.meeting.domain.ViewCount;
 import com.moa.meeting.domain.enums.EntryFeeInformation;
@@ -162,6 +163,79 @@ public class MeetingServiceImpl implements MeetingService {
 		viewCountRepository.save(viewCount);
 	}
 
+	@Override
+	public ApiResult<List<MeetingSimpleResponse>> getPopularMeetings(List<Long> ids) {
+		List<Long> popularMeetingIds = viewCountRepository.findTopMeetingIdsByViewCount();
+		// 주어진 ID 목록과 일치하는 Meeting 가져오기
+		List<Meeting> meetings = meetingRepository.findByIds(popularMeetingIds);
+
+		List<MeetingSimpleResponse> response = meetings.stream()
+				.filter(meeting -> ids.contains(meeting.getId()))
+				.map(this::convertToMeetingSimpleResponse)
+				.limit(3) // 조회수가 가장 높은 상위 3개만 반환
+				.collect(Collectors.toList());
+
+		return ApiResult.ofSuccess(response);
+	}
+
+	@Override
+	public ApiResult<List<MeetingSimpleResponse>> getSoaringMeetings(List<Long> ids) {
+		List<Meeting> meetings = meetingRepository.findSoaringMeetingsByIds(ids);
+		LocalDateTime now = LocalDateTime.now();
+
+		List<MeetingSimpleResponse> response = meetings.stream()
+				.filter(meeting -> determineMeetingStatus(meeting, now).equals("모집중"))
+				.map(this::convertToMeetingSimpleResponse)
+				.limit(3) // 임박한 순 3개만 반환
+				.collect(Collectors.toList());
+
+		return ApiResult.ofSuccess(response); // ApiResult에 데이터 포장
+	}
+
+	@Override
+	public ApiResult<List<MeetingSimpleResponse>> getNewMeetings(List<Long> ids) {
+		List<Meeting> meetings = meetingRepository.findNewMeetingsByIds(ids);
+
+		// MeetingSimpleResponse 목록 생성
+		List<MeetingSimpleResponse> response = meetings.stream()
+				.map(this::convertToMeetingSimpleResponse)
+				.limit(3) // 최신 3개만 반환
+				.collect(Collectors.toList());
+
+		return ApiResult.ofSuccess(response); // ApiResult에 데이터 포장
+	}
+
+	@Override
+	public ApiResult<List<MeetingSimpleResponse>> getSuggestedMeetings(List<Long> ids) {
+		List<Meeting> meetings = meetingRepository.findByIds(ids);
+
+		List<MeetingSimpleResponse> response = meetings.stream()
+				.map(this::convertToMeetingSimpleResponse)
+				.collect(Collectors.toList());
+
+		return ApiResult.ofSuccess(response);
+	}
+
+	private MeetingSimpleResponse convertToMeetingSimpleResponse(Meeting meeting) {
+
+		LocalDateTime now = LocalDateTime.now();	// 현재 시간
+		String meetingStatus = determineMeetingStatus(meeting, now);	// 모임 상태
+		// Meeting 엔티티를 MeetingSimpleResponse DTO로 변환
+		return MeetingSimpleResponse.builder()
+				.id(meeting.getId())
+				.title(meeting.getTitle())
+				.hostUserUuid(meeting.getHostUserUuid())
+				.hostNickname(meeting.getHostNickname())
+				.placeAddress(meeting.getPlaceAddress())
+				.meetingDatetime(meeting.getMeetingDatetime())	// 모임시간
+				.firstComeFirstServed(meeting.getFirstComeFirstServed() ? "승인제" : "선착순")	// 선착순 여부 : true면 선착순, false면 승인제
+				.onlineStatus(meeting.getOnlineStatus() ? "온라인" : "오프라인")	// 온라인 여부 : true면 온라인, false면 오프라인
+				.maxParticipants(meeting.getMaxParticipants())
+				.currentParticipants(meeting.getCurrentParticipants())
+				.meetingHeaderImageUrl(meeting.getHeaderImageUrl())
+				.meetingStatus(meetingStatus)
+				.build();
+	}
 	private List<String> convertCodesToTitles(String entryFeeInformations) {	// 참가비 정보 코드를 참가비 정보 제목으로 변환
 		return Arrays.stream(entryFeeInformations.split(","))	// 쉼표로 구분하여 리스트로 변환
 				.map(String::trim)	// 공백 제거
