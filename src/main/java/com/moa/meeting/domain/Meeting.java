@@ -24,25 +24,25 @@ public class Meeting extends BaseDateTime {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "title", length = 150)	//모임 제목
+	@Column(name = "title", length = 150)    //모임 제목
 	private String title;
 
-	@Column(name = "host_user_uuid")	//모임 개설자 uuid
+	@Column(name = "host_user_uuid")    //모임 개설자 uuid
 	private UUID hostUserUuid;
 
-	@Column(name = "host_nickname", length = 10)	//모임 개설자 이름
+	@Column(name = "host_nickname", length = 10)    //모임 개설자 이름
 	private String hostNickname;
 
-	@Column(name = "place_address", length = 255)	//모임 장소 주소
+	@Column(name = "place_address", length = 255)    //모임 장소 주소
 	private String placeAddress;
 
-	@Column(name = "description", length = 10000)	//모임 설명
+	@Column(name = "description", length = 10000)    //모임 설명
 	private String description;
 
 	@Column(name = "entry_fee")
 	private Integer entryFee;   // 입장료
 
-	@Column(name = "meeting_datetime")	//모임 시작 시간
+	@Column(name = "meeting_datetime")    //모임 시작 시간
 	private LocalDateTime meetingDatetime;
 
 	@Column(name = "first_come_first_served")
@@ -64,11 +64,15 @@ public class Meeting extends BaseDateTime {
 	@Column(name = "entry_fee_information_etc_string", length = 50)
 	private String entryFeeInfomationEtcString;   // 참가비 정보 기타 항목 string
 
-	@Column(name = "participation_question", length = 40)	//모임 참가시 필요한 질문(선착순 아닐 경우)
+	@Column(name = "participation_question", length = 40)    //모임 참가시 필요한 질문(선착순 아닐 경우)
 	private String participationQuestion;
 
-	@Column(name = "header_image_url", length = 255)	//모임 헤더 이미지 url
+	@Column(name = "header_image_url", length = 255)    //모임 헤더 이미지 url
 	private String headerImageUrl;
 
+
+	public void updateCurrentParticipants(int num) {
+		this.currentParticipants += num;
+	}
 
 }
