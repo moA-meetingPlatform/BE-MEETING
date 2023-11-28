@@ -26,3 +26,12 @@ springdoc:
   default-produces-media-type: application/json
   paths-to-match:
     - /api/v1/**
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 60000  # 연결 시도 타임아웃(ms)
+        readTimeout: 120000    # 읽기 타임아웃(ms)
+
+OPENAI_API_TOKEN: ${OPENAI_API_TOKEN}
