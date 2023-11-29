@@ -8,7 +8,7 @@ image:
   repository: awdfaf/be-meeting
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: dev-13
+  tag: dev-32
 
 container:
   port: 8000
@@ -102,3 +102,8 @@ env:
       secretKeyRef:
         name: db-passwords
         key: slave-db-password
+  - name: OPENAI_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: chat-gpt
+        key: OPENAI_API_TOKEN
