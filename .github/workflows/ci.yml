@@ -12,7 +12,7 @@ permissions:
   contents: write
 
 env:
-  IMAGE_TAG: dev-32
+  IMAGE_TAG: dev-33
 
 jobs:
   docker_build_and_push:

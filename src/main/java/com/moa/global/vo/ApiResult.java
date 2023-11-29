@@ -20,4 +20,7 @@ public record ApiResult<T>(
 		return new ApiResult<>(data, true, "success");
 	}
 
+	public static <T> ApiResult<T> ofError(ErrorCode code, String errorMessage) {
+		return new ApiResult<>(null, false, errorMessage);
+	}
 }

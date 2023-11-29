@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "view_count")
-public class ViewCount extends BaseDateTime{
+public class ViewCount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,4 +26,12 @@ public class ViewCount extends BaseDateTime{
 
     @Column(name = "last_viewed_time")
     private LocalDateTime lastViewedTime;
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public void setLastViewedTime(LocalDateTime lastViewedTime) {
+        this.lastViewedTime = lastViewedTime;
+    }
 }

@@ -1,6 +1,7 @@
 package com.moa.meeting.presentation;
 
 
+import com.moa.global.config.exception.ErrorCode;
 import com.moa.global.vo.ApiResult;
 import com.moa.meeting.application.MeetingService;
 import com.moa.meeting.dto.MeetingCreateDto;
@@ -73,9 +74,30 @@ public class MeetingController {
 	})
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResult<MeetingDetailResponse>> getMeeting(@PathVariable Long id) {
-		MeetingDetailGetDto meetingDetailGetDto = meetingService.getMeeting(id);    // 모임 조회
-		MeetingDetailResponse response = modelMapper.map(meetingDetailGetDto, MeetingDetailResponse.class);    // 모임 상세 조회 후 반환
+		// 조회수 증가 처리
+		meetingService.increaseViewCount(id);
+
+		MeetingDetailGetDto meetingDetailGetDto = meetingService.getMeeting(id); // 모임 조회
+		MeetingDetailResponse response = modelMapper.map(meetingDetailGetDto, MeetingDetailResponse.class); // 모임 상세 조회 후 반환
 		return ResponseEntity.ok(ApiResult.ofSuccess(response));
 	}
 
+	@Operation(summary = "메인화면", description = "메인화면 모임 추천")
+	@PostMapping("/recommendation")
+	public ResponseEntity<ApiResult<List<MeetingSimpleResponse>>> recommendationMeetings(
+			@RequestBody MeetingSimpleRequest request,
+			@RequestParam String type) {
+		switch (type) {
+			case "popular":	// 인기순
+				return ResponseEntity.ok(meetingService.getPopularMeetings(request.getIds()));
+			case "soaring":	// 마감임박순
+				return ResponseEntity.ok(meetingService.getSoaringMeetings(request.getIds()));
+			case "new":	// 최근생성순
+				return ResponseEntity.ok(meetingService.getNewMeetings(request.getIds()));
+			case "suggestion":	// 추천순
+				return ResponseEntity.ok(meetingService.getSuggestedMeetings(request.getIds()));
+			default:
+				return ResponseEntity.badRequest().body(ApiResult.ofError(ErrorCode.BAD_REQUEST, "유효하지않은 추천 타입입니다."));
+		}
+	}
 }

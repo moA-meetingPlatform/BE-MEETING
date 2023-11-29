@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MeetingSimpleRequest {
-    private List<Long> ids; //모임 id 리스트
+private List<Long> ids; //모임 id 리스트!
 }
